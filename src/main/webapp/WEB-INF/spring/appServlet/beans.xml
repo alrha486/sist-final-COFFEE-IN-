@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<annotation-driven />
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<!-- <resources mapping="/static/**" location="/static/" />-->
+	<default-servlet-handler/>
+
+	
+	
+	<resources mapping="/view/static/**" location="/static/" />
+	<resources mapping="/view/static/css/**" location="/static/css" />
+	<resources mapping="/view/static/js/**" location="/static/js" />
+	<resources mapping="/view/static/fonts/**" location="/static/fonts" />
+	
+	<resources mapping="/write/static/**" location="/static/" />
+	<resources mapping="/write/static/css/**" location="/static/css" />
+	<resources mapping="/write/static/js/**" location="/static/js" />
+	<resources mapping="/write/static/fonts/**" location="/static/fonts" />
+	
+	<resources mapping="/modify/static/**" location="/static/" />
+	<resources mapping="/modify/static/css/**" location="/static/css" />
+	<resources mapping="/modify/static/js/**" location="/static/js" />
+	<resources mapping="/modify/static/fonts/**" location="/static/fonts" />
+	
+	<resources mapping="/productList/static/**" location="/static/" />
+	<resources mapping="/productList/static/css/**" location="/static/css" />
+	<resources mapping="/productList/static/js/**" location="/static/js" />
+	<resources mapping="/productList/static/fonts/**" location="/static/fonts" />
+	
+	<resources mapping="/product/purchase/static/**" location="/static/" />
+	<resources mapping="/product/purchase/static/css/**" location="/static/css" />
+	<resources mapping="/product/purchase/static/js/**" location="/static/js" />
+	<resources mapping="/product/purchase/static/fonts/**" location="/static/fonts" />
+	
+	<resources mapping="/static/**" location="/static/" />
+	<resources mapping="/static/css/**" location="/static/css" />
+	<resources mapping="/static/js/**" location="/static/js" />
+	<resources mapping="/static/fonts/**" location="/static/fonts" />
+	<resources mapping="/static/includes/**" location="/static/includes" />
+	<resources mapping="/static/resources/**" location="/static/resources" />
+	
+	<resources mapping="/mypage/static/**" location="/static/" />
+	<resources mapping="/mypage/static/css/**" location="/static/css" />
+	<resources mapping="/mypage/static/js/**" location="/static/js" />
+	<resources mapping="/mypage/static/fonts/**" location="/static/fonts" />
+	
+	<resources mapping="/mypage/orderView/static/**" location="/static/" />
+	<resources mapping="/mypage/orderView/static/css/**" location="/static/css" />
+	<resources mapping="/mypage/orderView/static/js/**" location="/static/js" />
+	<resources mapping="/mypage/orderView/static/fonts/**" location="/static/fonts" />
+	
+	<resources mapping="/product/purchase1/static/**" location="/static/" />
+	<resources mapping="/product/purchase1/static/css/**" location="/static/css" />
+	<resources mapping="/product/purchase1/static/js/**" location="/static/js" />
+	<resources mapping="/product/purchase1/static/fonts/**" location="/static/fonts" />
+	
+	<resources mapping="/viewQnA/static/**" location="/static/" />
+	<resources mapping="/viewQnA/static/css/**" location="/static/css" />
+	<resources mapping="/viewQnA/static/js/**" location="/static/js" />
+	<resources mapping="/viewQnA/static/fonts/**" location="/static/fonts" />
+	
+	<resources mapping="/chatRoom1/static/**" location="/static/" />
+	<resources mapping="/chatRoom1/static/css/**" location="/static/css" />
+	<resources mapping="/chatRoom1/static/js/**" location="/static/js" />
+	<resources mapping="/chatRoom1/static/fonts/**" location="/static/fonts" />
+	
+	
+	
+	<resources mapping="/static/**" location="/static/" />
+	<resources mapping="/static/js/**" location="/static/js" />
+	<resources mapping="/static/css/**" location="/static/css" />
+	<resources mapping="/static/img/**" location="/static/img" />
+	<resources mapping="/static/fonts/**" location="/static/fonts" />
+
+	<resources mapping="/store/searchmap/static/**" location="/static/" />
+	<resources mapping="/search/static/**" location="/static/" />
+
+
+	<resources mapping="/admin/static/**" location="/static/" />
+	<resources mapping="/admin/static/js/**" location="/static/js" />
+	<resources mapping="/admin/static/css/**" location="/static/css" />
+	<resources mapping="/admin/static/img/**" location="/static/img" />
+	<resources mapping="/admin/static/fonts/**" location="/static/fonts" />
+	
+	<resources mapping="/couponMGMT/static/**" location="/static/" />
+	<resources mapping="/couponMGMT/static/js/**" location="/static/js" />
+	<resources mapping="/couponMGMT/static/css/**" location="/couponMGMT/static/css" />
+	<resources mapping="/couponMGMT/static/img/**" location="/static/img" />
+	<resources mapping="/couponMGMT/static/fonts/**" location="/static/fonts" />
+	<resources mapping="/couponMGMT/static/resources/**" location="/static/resources" />
+
+
+	<resources mapping="/admin/modify/static/**" location="/static/" />
+	<resources mapping="/admin/modify/static/js/**" location="/static/js" />
+	<resources mapping="/admin/modify/static/css/**" location="/static/css" />
+	<resources mapping="/admin/modify/static/img/**" location="/static/img" />
+	<resources mapping="/admin/modify/static/fonts/**" location="/static/fonts" />
+
+	<resources mapping="/couponModify/static/**" location="/static/" />
+	<resources mapping="/couponModify/static/js/**" location="/static/js" />
+	<resources mapping="/couponModify/static/css/**" location="/static/css" />
+	<resources mapping="/couponModify/static/img/**" location="/static/img" />
+	<resources mapping="/couponModify/static/fonts/**" location="/static/fonts" />
+
+	<resources mapping="/couponIssue/static/**" location="/static/" />
+	<resources mapping="/couponIssue/static/js/**" location="/static/js" />
+	<resources mapping="/couponIssue/static/css/**" location="/static/css" />
+	<resources mapping="/couponIssue/static/img/**" location="/static/img" />
+	<resources mapping="/couponIssue/static/fonts/**" location="/static/fonts" />
+	
+	<resources mapping="/modifyProductOne/static/**" location="/static/" />
+	<resources mapping="/modifyProductOne/static/js/**" location="/static/js" />
+	<resources mapping="/modifyProductOne/static/css/**" location="/static/css" />
+	<resources mapping="/modifyProductOne/static/img/**" location="/static/img" />
+	<resources mapping="/modifyProductOne/static/fonts/**" location="/static/fonts" />
+	
+	<resources mapping="/info_view/static/**" location="/static/" />
+	<resources mapping="/info_view/static/js/**" location="/static/js" />
+	<resources mapping="/info_view/static/css/**" location="/static/css" />
+	<resources mapping="/info_view/static/img/**" location="/static/img" />
+	<resources mapping="/info_view/static/fonts/**" location="/static/fonts" />
+
+	<resources mapping="/todayview/static/**" location="/static/" />
+	<resources mapping="/todayview/static/js/**" location="/static/js" />
+	<resources mapping="/todayview/static/css/**" location="/static/css" />
+	<resources mapping="/todayview/static/img/**" location="/static/img" />
+	<resources mapping="/todayview/static/fonts/**" location="/static/fonts" />
+
+	<resources mapping="/delivery_info/static/**" location="/static/" />
+	<resources mapping="/delivery_info/static/js/**" location="/static/js" />
+	<resources mapping="/delivery_infow/static/css/**" location="/static/css" />
+	<resources mapping="/delivery_infow/static/img/**" location="/static/img" />
+	<resources mapping="/delivery_info/static/fonts/**" location="/static/fonts" />
+
+	<resources mapping="/addressInsert/static/**" location="/static/" />
+	<resources mapping="/addressInsert/static/js/**" location="/static/js" />
+	<resources mapping="/addressInsert/static/css/**" location="/static/css" />
+	<resources mapping="/addressInsert/static/img/**" location="/static/img" />
+	<resources mapping="/addressInsert/static/fonts/**" location="/static/fonts" />
+	
+	<resources mapping="/re/static/**" location="/static/" />
+	<resources mapping="/re/static/js/**" location="/static/js" />
+	<resources mapping="/re/static/css/**" location="/static/css" />
+	<resources mapping="/re/static/img/**" location="/static/img" />
+	<resources mapping="/re/static/fonts/**" location="/static/fonts" />
+	
+	<resources mapping="/update/static/**" location="/static/" />
+	<resources mapping="/update/static/js/**" location="/static/js" />
+	<resources mapping="/update/static/css/**" location="/static/css" />
+	<resources mapping="/update/static/img/**" location="/static/img" />
+	<resources mapping="/update/static/fonts/**" location="/static/fonts" />
+
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/static/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+	
+	<context:component-scan base-package="com.example" />
+	<annotation-driven />
+	<default-servlet-handler/>
+
+		
+	<beans:bean id="sessionListener" class="com.example.util.SessionListener"/>
+	<beans:bean id="echoHandler" class="com.example.util.EchoHandler"/>
+
+<websocket:handlers>
+    <websocket:mapping handler="echoHandler" path="/echo" />
+    <websocket:handshake-interceptors>
+   <beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+    </websocket:handshake-interceptors>
+    <websocket:sockjs />
+</websocket:handlers>
+	
+	
+	
+	
+	<beans:bean id="multipartResolver" 
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="defaultEncoding" value="utf-8" />
+		<beans:property name="maxUploadSize" value="10240000"/>
+	</beans:bean>
+	
+	<beans:bean id="uploadPath" class="java.lang.String">
+		<!-- <beans:constructor-arg value="C:\\upload" /> -->
+		<beans:constructor-arg value="C:\SpringHome\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\ProductList\static\img" />
+	</beans:bean>
+	
+	<mvc:resources location="file:///C:\SpringHome\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\ProductList\static\img" mapping="/upload/*" />
+</beans:beans>
+	
+	
+
+
+
+
