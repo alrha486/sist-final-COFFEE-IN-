@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		
+<mapper namespace="Review">
+	<!-- 리뷰게시판 -->
+	<resultMap type="revVo" id="reviewMap">
+		<result column="rev_idx" property="rev_idx" jdbcType="INTEGER" javaType="java.lang.Integer"/> 
+		 <result column="productid" property="productid" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<result column="userid" property="userid" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="rev_title" property="rev_title" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="rev_file" property="rev_file" jdbcType="VARCHAR" javaType="java.lang.String"/> 
+		 <result column="rev_score" property="rev_score" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		 <result column="rev_contents" property="rev_contents" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		 <result column="rev_writedate" property="rev_writedate" jdbcType="DATE" javaType="java.lang.String"/>
+		 <result column="productname" property="productname" jdbcType="VARCHAR" javaType="java.lang.String"/>
+	</resultMap>
+	
+	<!-- 상품별 리뷰 전체 목록 -->
+	<parameterMap type="revVo" id="paraReviewMap">
+		<parameter property="productid" javaType="Integer" jdbcType="TINYINT" mode="IN" />
+		<parameter property="start" jdbcType="INTEGER" javaType="Integer" mode="IN"/>
+	    <parameter property="end"  jdbcType="INTEGER" javaType="Integer" mode="IN"/>
+		<parameter property="results" javaType="java.sql.ResultSet" jdbcType="CURSOR" mode="OUT" resultMap="reviewMap"/>
+	</parameterMap>
+	<select id="revSelect" statementType="CALLABLE" parameterMap="paraReviewMap">
+		{call rev_select(?,?,?,?)}
+	</select>
+	
+	<!-- 리뷰 등록 -->
+	<parameterMap type="revVo" id="insertMap">
+		<parameter property="productid" mode="IN" javaType="Integer" jdbcType="TINYINT"/>
+		<parameter property="userid" mode="IN" javaType="String" jdbcType="VARCHAR"/>
+		<parameter property="rev_title" mode="IN" javaType="String" jdbcType="VARCHAR"/>
+		<parameter property="rev_score" mode="IN" javaType="Integer" jdbcType="TINYINT"/>
+		<parameter property="rev_contents" mode="IN" javaType="String" jdbcType="VARCHAR"/>
+	</parameterMap>
+	<insert id="revInsert"  parameterMap="insertMap" parameterType="revVo">
+		{call rev_insert(?, ?, ?, ?, ?)}
+	</insert>
+	
+	<!-- 리뷰 수정 -->
+	<parameterMap type="revVo"  id="updateMap">
+		<parameter property="rev_title"  javaType="String" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="rev_score" javaType="Integer" jdbcType="TINYINT" mode="IN"/>
+		<parameter property="rev_contents" javaType="String" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="rev_idx" javaType="Integer" jdbcType="TINYINT" mode="IN"/>
+	</parameterMap>
+	<update id="revUpdate" parameterMap="updateMap">
+		{call rev_update(?, ?, ?, ?)}
+	</update>
+	
+	<!-- 리뷰 정보 불러오기 -->
+	<parameterMap type="hashMap" id="paraOneReviewMap">
+		<parameter property="rev_idx" javaType="Integer" jdbcType="TINYINT" mode="IN"/>
+		<parameter property="result" javaType="java.sql.ResultSet" jdbcType="CURSOR" mode="OUT" resultMap="reviewMap"/>
+	</parameterMap>
+	<select id="revSelectOne" statementType="CALLABLE" parameterMap="paraOneReviewMap">
+		{call rev_select_one(?, ?)}
+	</select>
+	
+	<!-- 리뷰 삭제 -->
+	<parameterMap type="revVo" id="deleteMap">
+		<parameter property="rev_idx" javaType="Integer" jdbcType="TINYINT" mode="IN"/>
+	</parameterMap>
+	<delete id="revDelete" parameterMap="deleteMap">
+		{call rev_delete(?)}
+	</delete>
+	
+	<!-- 상품별 리뷰 카운트 -->
+	<parameterMap type="hashMap" id="selectReviewCountMap">
+		<parameter property="productid" javaType="Integer" jdbcType="TINYINT" mode="IN" />
+		<parameter property="result" javaType="Integer" jdbcType="INTEGER" mode="OUT"/>
+	</parameterMap>
+	<select id="selectReviewCountSP" parameterMap="selectReviewCountMap" statementType="CALLABLE">
+		{  call sp_product_review_count(?,?) }
+	</select>
+
+</mapper>

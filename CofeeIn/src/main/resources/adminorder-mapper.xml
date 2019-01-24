@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OrderProduct">
+
+	<resultMap type="productVo" id="admin_order_select_map">
+		<result column="productid" property="productid" jdbcType="TINYINT" javaType="Integer"/>
+		<result column="kind_idx" property="kind_idx" jdbcType="TINYINT" javaType="Integer"/>
+		<result column="productname" property="productname" jdbcType="VARCHAR" javaType="String"/>
+		<result column="productimg" property="productimg" jdbcType="VARCHAR" javaType="String"/>
+		<result column="productex" property="productex" jdbcType="VARCHAR" javaType="String"/>
+		<result column="price" property="price" jdbcType="TINYINT" javaType="Integer"/>
+		<result column="s_count" property="s_count" jdbcType="TINYINT" javaType="Integer"/>
+		<result column="registerDate" property="registerDate" jdbcType="VARCHAR" javaType="String"/>
+	</resultMap>
+	
+	<parameterMap type="hashMap" id="admin_order_select">
+		<parameter property="admin_order_select_result" javaType="ResultSet" jdbcType="CURSOR" mode="OUT" resultMap="admin_order_select_map"/>
+	</parameterMap>
+	<select id="admin_order_select" parameterMap="admin_order_select" statementType="CALLABLE" parameterType="hashMap">
+		{call sq_admin_order_select(?)}
+	</select>
+	
+	<resultMap type="adminOrderVo" id="admin_order_select_all_map">
+		<result column="orderidx" property="orderidx" jdbcType="INTEGER" javaType="Integer"/>
+		<result column="orderid" property="orderid" jdbcType="INTEGER" javaType="Integer"/>
+		<result column="productid" property="productid" jdbcType="INTEGER" javaType="Integer"/>
+		<result column="pcount" property="pcount" jdbcType="INTEGER" javaType="Integer"/>
+		<result column="price" property="price" jdbcType="TINYINT" javaType="Integer"/>
+		<result column="productname" property="productname" jdbcType="VARCHAR" javaType="String"/>
+		<result column="username" property="username" jdbcType="VARCHAR" javaType="String"/>
+		<result column="selldate" property="selldate" jdbcType="VARCHAR" javaType="String"/>
+		<result column="payid" property="payid" jdbcType="VARCHAR" javaType="String"/>
+		<result column="o_state" property="o_state" jdbcType="VARCHAR" javaType="String"/>
+		<result column="delivery" property="delivery" jdbcType="INTEGER" javaType="Integer"/>
+		<result column="totalprice" property="totalprice" jdbcType="INTEGER" javaType="Integer"/>
+		<result column="discount_price" property="discount_price" jdbcType="INTEGER" javaType="Integer"/>
+		<result column="userid" property="userid" jdbcType="VARCHAR" javaType="String"/>
+	</resultMap>
+	
+	<parameterMap type="hashMap" id="admin_order_select_all">
+		<parameter property="admin_order_select_all_result" javaType="ResultSet" jdbcType="CURSOR" mode="OUT" resultMap="admin_order_select_all_map"/>
+	</parameterMap>
+	
+	<select id="admin_order_select_all" parameterMap="admin_order_select_all" statementType="CALLABLE" parameterType="hashMap">
+		{call sq_admin_order_select_all(?)}
+	</select>
+	
+	
+	<parameterMap type="hashMap" id="admin_order_select_any">
+		<parameter property="admin_order_select_any_result" javaType="ResultSet" jdbcType="CURSOR" mode="OUT" resultMap="admin_order_select_all_map"/>
+		<parameter property="productname" jdbcType="VARCHAR" javaType="String" mode="IN"/>
+		<parameter property="datepicker1" jdbcType="VARCHAR" javaType="String" mode="IN"/>
+		<parameter property="datepicker2" jdbcType="VARCHAR" javaType="String" mode="IN"/>
+		<parameter property="deliveryStep" jdbcType="VARCHAR" javaType="String" mode="IN"/>
+		<parameter property="orderlist" jdbcType="INTEGER" javaType="Integer" mode="IN"/>
+	</parameterMap>
+	<select id="admin_order_select_any" parameterMap="admin_order_select_any" statementType="CALLABLE" parameterType="hashMap">
+		{ call sq_admin_order_select_any(?,?,?,?,?,?) }
+	</select>
+	
+	
+	
+	<parameterMap type="hashMap" id="admin_order_select_sort">
+		<parameter property="admin_order_select_any_result" javaType="ResultSet" jdbcType="CURSOR" mode="OUT" resultMap="admin_order_select_all_map"/>
+		<parameter property="productname" jdbcType="VARCHAR" javaType="String" mode="IN"/>
+		<parameter property="datepicker1" jdbcType="VARCHAR" javaType="String" mode="IN"/>
+		<parameter property="datepicker2" jdbcType="VARCHAR" javaType="String" mode="IN"/>
+		<parameter property="deliveryStep" jdbcType="VARCHAR" javaType="String" mode="IN"/>
+		<parameter property="payid" jdbcType="VARCHAR" javaType="String" mode="IN"/>
+	</parameterMap>
+	<select id="adminOrder_select_any_price" parameterMap="admin_order_select_sort" statementType="CALLABLE" parameterType="hashMap">
+		{ call sq_admin_order_select_price(?,?,?,?,?,?) }	
+	</select>
+	
+	<select id="adminOrder_select_any_selldate" parameterMap="admin_order_select_sort" statementType="CALLABLE" parameterType="hashMap">
+		{ call sq_admin_order_select_selldate(?,?,?,?,?,?) }	
+	</select>
+	
+		<select id="adminOrder_select_any_orderid" parameterMap="admin_order_select_sort" statementType="CALLABLE" parameterType="hashMap">
+		{ call sq_admin_order_select_orderid(?,?,?,?,?,?) }	
+	</select>
+	
+</mapper>

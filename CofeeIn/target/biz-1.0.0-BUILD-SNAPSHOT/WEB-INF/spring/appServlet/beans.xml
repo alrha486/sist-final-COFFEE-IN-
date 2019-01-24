@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<annotation-driven />
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<resources mapping="/static/**" location="/static/" />
+
+	<resources mapping="/productList/**" location="/static/" />
+	<resources mapping="/productList/js/**" location="/static/js" />
+	<resources mapping="/productList/css/**" location="/static/css" />
+	<resources mapping="/productList/img/**" location="/static/img" />
+	<resources mapping="/productList/fonts/**" location="/static/fonts" />
+	
+	<resources mapping="productList/**" location="/static/" />
+	<resources mapping="productList/js/**" location="/static/js" />
+	<resources mapping="productList/css/**" location="/static/css" />
+	<resources mapping="productList/img/**" location="/static/img" />
+	<resources mapping="productList/fonts/**" location="/static/fonts" />
+	
+	
+	<resources mapping="/view/static/**" location="/static/" />
+	<resources mapping="/view/static/css/**" location="/static/css" />
+	<resources mapping="/view/static/js/**" location="/static/js" />
+	<resources mapping="/view/static/fonts/**" location="/static/fonts" />
+	
+	<resources mapping="/product/purchase/static/**" location="/static/" />
+	<resources mapping="/product/purchase/static/css/**" location="/static/css" />
+	<resources mapping="/product/purchase/static/js/**" location="/static/js" />
+	<resources mapping="/product/purchase/static/fonts/**" location="/static/fonts" />
+	
+	<resources mapping="/admin/static/**" location="/static/" />
+	<resources mapping="/admin/static/css/**" location="/static/css" />
+	<resources mapping="/admin/static/js/**" location="/static/js" />
+	<resources mapping="/admin/static/fonts/**" location="/static/fonts" />
+	<resources mapping="/admin/static/includes/**" location="/static/includes" />
+	<resources mapping="/admin/static/resources/**" location="/static/resources" />
+	
+	<resources mapping="/mypage/static/**" location="/static/" />
+	<resources mapping="/mypage/static/css/**" location="/static/css" />
+	<resources mapping="/mypage/static/js/**" location="/static/js" />
+	<resources mapping="/mypage/static/fonts/**" location="/static/fonts" />
+	
+	<resources mapping="/mypage/orderView/static/**" location="/static/" />
+	<resources mapping="/mypage/orderView/static/css/**" location="/static/css" />
+	<resources mapping="/mypage/orderView/static/js/**" location="/static/js" />
+	<resources mapping="/mypage/orderView/static/fonts/**" location="/static/fonts" />
+	
+	<resources mapping="/product/purchase1/static/**" location="/static/" />
+	<resources mapping="/product/purchase1/static/css/**" location="/static/css" />
+	<resources mapping="/product/purchase1/static/js/**" location="/static/js" />
+	<resources mapping="/product/purchase1/static/fonts/**" location="/static/fonts" />
+	
+	<resources mapping="/viewQnA/static/**" location="/static/" />
+	<resources mapping="/viewQnA/static/css/**" location="/static/css" />
+	<resources mapping="/viewQnA/static/js/**" location="/static/js" />
+	<resources mapping="/viewQnA/static/fonts/**" location="/static/fonts" />
+	
+	<resources mapping="/chatRoom1/static/**" location="/static/" />
+	<resources mapping="/chatRoom1/static/css/**" location="/static/css" />
+	<resources mapping="/chatRoom1/static/js/**" location="/static/js" />
+	<resources mapping="/chatRoom1/static/fonts/**" location="/static/fonts" />
+	
+	
+	
+	
+	
+	<resources mapping="/store/searchmap/static/**" location="/static/" />
+	<resources mapping="/search/static/**" location="/static/" />
+		
+
+	
+
+
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/static/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+	
+	<context:component-scan base-package="com.example" />
+	<annotation-driven />
+	<default-servlet-handler/>
+
+		
+	<beans:bean id="sessionListener" class="com.example.util.SessionListener"/>
+	<beans:bean id="echoHandler" class="com.example.util.EchoHandler"/>
+
+<websocket:handlers>
+    <websocket:mapping handler="echoHandler" path="/echo" />
+    <websocket:handshake-interceptors>
+   <beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+    </websocket:handshake-interceptors>
+    <websocket:sockjs />
+</websocket:handlers>
+	
+	
+	
+	
+	<beans:bean id="multipartResolver" 
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="defaultEncoding" value="utf-8" />
+		<beans:property name="maxUploadSize" value="10240000"/>
+	</beans:bean>
+	
+	<beans:bean id="uploadPath" class="java.lang.String">
+		<!-- <beans:constructor-arg value="C:\\upload" /> -->
+		<beans:constructor-arg value="C:\SpringHome\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\ProductList\static\img" />
+	</beans:bean>
+	
+	<mvc:resources location="file:///C:\SpringHome\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\ProductList\static\img" mapping="/upload/*" />
+</beans:beans>
+	
+	
+
+
+
+

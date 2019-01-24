@@ -1,0 +1,24 @@
+@charset "UTF-8";
+
+h1{
+	text-align: center;
+}
+
+#count{
+	text-align: center;
+}
+
+#innerSearch{
+	width:100%;
+	height: 40px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	
+}
+
+#input{
+	margin : auto;
+	width:1500px;
+	height:40px;
+}

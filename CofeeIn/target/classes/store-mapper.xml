@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Store">
+
+	<resultMap type="storeVo" id="StoreMap"> 
+		<result column="shopid" property="shopid" jdbcType="INTEGER" javaType="Integer"/>
+		<result column="shopname" property="shopname" jdbcType="VARCHAR" javaType="String"/>
+		<result column="address" property="address" jdbcType="VARCHAR" javaType="String"/>
+		<result column="telenumber" property="telenumber" jdbcType="VARCHAR" javaType="String"/>
+		<result column="latitude" property="latitude" jdbcType="DOUBLE" javaType="double"/>
+		<result column="longitude" property="longitude" jdbcType="DOUBLE" javaType="double"/>
+	</resultMap>
+	
+	<parameterMap type="hashMap" id="sAllMap">
+		<parameter property="storeAllResult" javaType="ResultSet" jdbcType="CURSOR" mode="OUT" resultMap="StoreMap"/>
+	</parameterMap>
+	
+	<select id="storeAllSearch" parameterMap="sAllMap" statementType="CALLABLE" parameterType="hashMap">
+		{ call store_all_search(?)}
+	</select>
+	
+
+	<parameterMap type="hashMap" id="sMap">
+		<parameter property="address" javaType="String" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="storeAnyResult" javaType="ResultSet" jdbcType="CURSOR" mode="OUT" resultMap="StoreMap"/>
+	</parameterMap>
+	
+	<select id="storeAnySearch" parameterMap="sMap" statementType="CALLABLE" parameterType="hashMap">
+		{ call store_any_search(?,?)}
+	</select>
+	
+	<parameterMap type="hashMap" id="shopMap">
+		<parameter property="shopname" javaType="String" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="shopnameResult" javaType="ResultSet" jdbcType="CURSOR" mode="OUT" resultMap="StoreMap"/>
+	</parameterMap>
+	
+	<select id="shopnameSearch" parameterMap="shopMap" statementType="CALLABLE" parameterType="hashMap">
+		{ call shopname_search(?,?)}
+	</select>
+	
+	
+</mapper>
+

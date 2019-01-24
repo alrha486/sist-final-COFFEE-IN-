@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.example.vo.MemberVO" alias="memberVo"/>
+		<typeAlias type="com.example.vo.cartBasicVO" alias="cartBasicVo"/>
+		<typeAlias type="com.example.vo.cartDetailVO" alias="cartDetailVo"/>
+		<typeAlias type="com.example.vo.ProductVO" alias="productVo"/>
+		<typeAlias type="com.example.vo.CouponVO" alias="couponVo"/>
+		<typeAlias type="com.example.vo.userCouponVO" alias="userCouponVo"/>
+		<typeAlias type="com.example.vo.orderbasicVO" alias="orderbasicVo"/>
+		<typeAlias type="com.example.vo.orderdetailVO" alias="orderdetailVo"/>
+		<typeAlias type="com.example.vo.CityVO" alias="cityVo"/>
+		<typeAlias type="com.example.vo.StoreVO" alias="storeVo"/>
+		<typeAlias type="com.example.vo.MessageVO" alias="messageVo"/>
+		<typeAlias type="com.example.vo.SavingVO" alias="savingVo"/>
+		<typeAlias type="com.example.vo.RevVO" alias="revVo"/>
+		<typeAlias type="com.example.vo.AdminOrderVO" alias="adminOrderVo"/>
+		<typeAlias type="com.example.vo.MyVO" alias="myVo"/>
+		<typeAlias type="com.example.vo.QaddressVO" alias="qaddressVo"/>
+		<typeAlias type="com.example.vo.QnAVO" alias="qnaVo"/>
+		
+	</typeAliases>
+</configuration>

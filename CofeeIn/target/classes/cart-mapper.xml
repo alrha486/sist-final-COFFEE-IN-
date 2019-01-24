@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Cart">
+
+	<resultMap type="cartDetailVo" id="selectResultMap"> <!-- 장바구니조회결과가 담길 Map -->
+		<result column="cartidx" property="cartidx" jdbcType="VARCHAR" javaType="String"/>
+		<result column="cartid" property="cartid" jdbcType="VARCHAR" javaType="String"/>
+		<result column="productid" property="productid" jdbcType="TINYINT" javaType="Integer"/>
+		<result column="p_count" property="p_count" jdbcType="TINYINT" javaType="Integer"/>
+		<result column="validation" property="validation" jdbcType="TINYINT" javaType="Integer"/>
+		<result column="price" property="price" jdbcType="SMALLINT" javaType="Integer"/>
+	</resultMap>
+
+	<resultMap type="cartDetailVo" id="selectResultMap1"> <!-- 장바구니조회결과가 담길 Map -->
+		<result column="cartidx" property="cartidx" jdbcType="VARCHAR" javaType="String"/>
+		<result column="cartid" property="cartid" jdbcType="VARCHAR" javaType="String"/>
+		<result column="productid" property="productid" jdbcType="TINYINT" javaType="Integer"/>
+		<result column="p_count" property="p_count" jdbcType="TINYINT" javaType="Integer"/>
+		<result column="validation" property="validation" jdbcType="TINYINT" javaType="Integer"/>
+		<result column="price" property="price" jdbcType="SMALLINT" javaType="Integer"/>
+		<result column="productname" property="productname" jdbcType="VARCHAR" javaType="String"/>
+		<result column="productimg" property="productimg" jdbcType="VARCHAR" javaType="String"/>
+		<result column="price1" property="price1" jdbcType="SMALLINT" javaType="Integer"/>
+	</resultMap>
+
+
+
+	<parameterMap type="cartDetailVo" id="CartselectAllMap"> <!--  카트 전체조회 -->
+		<parameter property="userid" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="results" javaType="ResultSet" jdbcType="CURSOR" mode="OUT"  resultMap="selectResultMap1"/>
+	</parameterMap>
+	<select id="select_cartDetail" parameterMap="CartselectAllMap" statementType="CALLABLE" parameterType="hashMap">
+		{ call select_cartDetail(?,?)}
+	</select>
+
+	
+	<parameterMap type="cartDetailVo" id="CartselectMap"> <!--  카트 ID로 한줄조회 -->
+		<parameter property="cartidx" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="results" javaType="ResultSet" jdbcType="CURSOR" mode="OUT"  resultMap="selectResultMap1"/>
+	</parameterMap>
+	<select id="select_cartDetailOne" parameterMap="CartselectMap" statementType="CALLABLE" parameterType="hashMap">
+		{ call select_cartDetailOne(?,?)}
+	</select>
+	
+	
+	<parameterMap type="Integer" id="deleteMap"> <!-- 선택한 카트 삭제 -->
+		<parameter property="idx" javaType="Integer" jdbcType="INTEGER" mode="IN" />
+	</parameterMap>
+	<delete id="delete_cartDetail" parameterMap="deleteMap">
+		{ call cartdetail_delete(?) }
+	</delete>
+	
+	
+	<parameterMap type="String" id="useridMap"> <!-- cartBasic Insert-->
+		<parameter property="userid" javaType="String" jdbcType="VARCHAR" mode="IN" />
+	</parameterMap>
+	<insert id="insertCartBasic" parameterMap="useridMap">
+		{ call cartBasic_insert(?)} 
+	</insert>  <!-- cartBasic 입력 -->
+	
+	
+	<parameterMap type="cartDetailVo" id="useridMap1"> <!-- cartID 추출하기 -->
+		<parameter property="userid" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="results" javaType="ResultSet" jdbcType="CURSOR" mode="OUT"  resultMap="selectResultMap"/>
+	</parameterMap>
+	<select id="select_cartId" parameterMap="useridMap1" statementType="CALLABLE" parameterType="hashMap">
+		{ call search_cartid(?,?) }
+	</select>
+	
+	<parameterMap type="cartDetailVo" id="detailInsertMap"> <!--  카트 ID로 한줄조회 -->
+		<parameter property="cartid" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="productid" javaType="Integer" jdbcType="TINYINT" mode="IN" />
+		<parameter property="p_count" javaType="Integer" jdbcType="TINYINT" mode="IN" />
+		<parameter property="price" javaType="Integer" jdbcType="SMALLINT" mode="IN" />	
+	</parameterMap>
+	<insert id="insertCartDetail" parameterMap="detailInsertMap">
+		{ call cartDetail_insert(?,?,?,?)} 
+	</insert>  <!-- cartBasic 입력 -->
+	
+	
+	<parameterMap type="cartDetailVo" id="CartselectAllMap1"> <!--  카트 전체조회 -->
+		<parameter property="cartid" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="productid" javaType="Integer" jdbcType="TINYINT" mode="IN" />
+		<parameter property="results" javaType="ResultSet" jdbcType="CURSOR" mode="OUT"  resultMap="selectResultMap1"/>
+	</parameterMap>
+	<select id="selectCartDetailOne" parameterMap="CartselectAllMap1" statementType="CALLABLE" parameterType="hashMap">
+		{ call select_productid(?,?,?)}
+	</select> <!-- cartid랑 productid로 해당상품이 장바구니에 존재하는지 확인  -->
+
+
+
+	<parameterMap type="cartDetailVo" id="updateCartDetailMap">
+		<parameter property="cartidx" javaType="String" jdbcType="INTEGER" mode="IN" />
+		<parameter property="p_count" javaType="Integer" jdbcType="INTEGER" mode="IN" />
+		<parameter property="price" javaType="Integer" jdbcType="INTEGER" mode="IN" />
+	</parameterMap>
+	<update id="updateCartDetail" parameterMap="updateCartDetailMap">
+	{ call updateCartDetail(?,?,?) }
+	</update>
+	
+</mapper>
+

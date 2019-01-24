@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="City">
+
+	<resultMap type="cityVo" id="CityMap"> 
+		<result column="SEQ" property="SEQ" jdbcType="INTEGER" javaType="Integer"/>
+		<result column="zipcode" property="zipcode" jdbcType="VARCHAR" javaType="String"/>
+		<result column="sido" property="sido" jdbcType="VARCHAR" javaType="String"/>
+		<result column="gugun" property="gugun" jdbcType="VARCHAR" javaType="String"/>
+		<result column="dong" property="dong" jdbcType="VARCHAR" javaType="String"/>
+		<result column="bunji" property="bunji" jdbcType="VARCHAR" javaType="String"/>
+	</resultMap>
+
+	<parameterMap type="hashMap" id="CityAllMap">
+		<parameter property="cityresult" javaType="ResultSet" jdbcType="CURSOR" mode="OUT"  resultMap="CityMap"/>
+		<parameter property="sido" javaType="String" jdbcType="VARCHAR" mode="IN"/>
+	</parameterMap>
+	<select id="CityListAll" parameterMap="CityAllMap" statementType="CALLABLE" parameterType="hashMap">
+		{ call select_city_list_gugun(?,?)}
+	</select>
+	
+</mapper>

@@ -1,0 +1,40 @@
+.footerc{
+	width:100%;
+	text-align: center;
+}
+
+#footercon{
+	display: inline-block;
+}
+
+#footercon > a{
+	color : #A09CA4;
+}
+
+.copy_menu {
+	color : #A09CA4;
+}
+
+.en{
+	color : #A09CA4
+}
+
+#footercon > a {
+	font-size: 15px;
+}
+
+#iconsection{
+	margin-top: 10px;
+}
+
+#middlerange{
+	margin : 10px 5px 10px 5px;
+}
+
+#sl{
+	color: white;
+}
+
+.hea{
+	padding-right: 6px;
+}

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Message">
+
+	<resultMap type="messageVo" id="selectResultMap"> <!-- Member테이블select 시 담길 Map -->
+		<result column="m_idx" property="m_idx" jdbcType="INTEGER" javaType="Integer" />
+		<result column="m_sender" property="m_sender" 	jdbcType="VARCHAR" javaType="String" />
+		<result column="m_receiver" property="m_receiver" 	jdbcType="VARCHAR" javaType="String" />
+		<result column="m_contents" property="m_contents" 	jdbcType="VARCHAR" javaType="String" />
+		<result column="m_date" property="m_date" 	jdbcType="VARCHAR" javaType="String" />	
+		<result column="username" property="username" 	jdbcType="VARCHAR" javaType="String" />
+	</resultMap>
+	
+
+	<!-- 회원가입 시 축하 메시지 insert -->
+	<parameterMap type="messageVo" id="insertCouponMessageMap"> <!-- 일반 회원가입 -->
+		<parameter property="m_receiver" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="m_contents" javaType="String" 	jdbcType="VARCHAR" mode="IN" />
+	</parameterMap>
+	<insert id="insertCouponMessage" parameterType="messageVo" parameterMap="insertCouponMessageMap">
+		{ call insertCouponMessage(?,?)}
+	</insert>
+	
+	
+	<!-- userid로 전체 메시지 조회 -->
+	<parameterMap type="messageVo" id="selectMessageAllMap">
+		<parameter property="m_receiver" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="results" javaType="ResultSet" jdbcType="CURSOR" mode="OUT" resultMap="selectResultMap" />
+	</parameterMap>
+	<select id="selectMessageAll" parameterMap="selectMessageAllMap" statementType="CALLABLE" parameterType="HashMap">
+		{ call selectMessageAll(?,?) }
+	</select> 
+	
+	<!-- 주문완료시 감사 메시지 insert -->
+	<parameterMap type="messageVo" id="insertOrderMessageMap"> <!-- 일반 회원가입 -->
+		<parameter property="m_receiver" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="m_contents" javaType="String" 	jdbcType="VARCHAR" mode="IN" />
+	</parameterMap>
+	<insert id="insertOrderMessage" parameterType="messageVo" parameterMap="insertOrderMessageMap">
+		{ call insertOrderMessage(?,?)}
+	</insert>
+	
+			<!-- 발신자ID로 전체 메시지 조회(관리자용) -->
+	<parameterMap type="messageVo" id="selectMessageAllAdminMap">
+		<parameter property="m_sender" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="results" javaType="ResultSet" jdbcType="CURSOR" mode="OUT" resultMap="selectResultMap" />
+	</parameterMap>
+	<select id="selectMessageAllAdmin" parameterMap="selectMessageAllAdminMap" statementType="CALLABLE" parameterType="HashMap">
+		{ call selectMessageAllAdmin(?,?) }
+	</select> 
+
+				<!-- 관리자입장에서 누구누구한테 메시지가 왔는 지-->
+	<parameterMap type="messageVo" id="selectReceiverListMap">
+		<parameter property="m_receiver" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="results" javaType="ResultSet" jdbcType="CURSOR" mode="OUT" resultMap="selectResultMap" />
+	</parameterMap>
+	<select id="selectReceiverList" parameterMap="selectReceiverListMap" statementType="CALLABLE" parameterType="HashMap">
+		{ call selectReceiverList(?,?) }
+	</select> 
+	
+	
+		<!-- 유저 메시지 DB에 입력 -->
+	<parameterMap type="messageVo" id="insertUserMessageMap"> 
+		<parameter property="m_sender" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="m_contents" javaType="String"	jdbcType="VARCHAR" mode="IN" />
+	</parameterMap>
+	<insert id="insertUserMessage" parameterType="messageVo" parameterMap="insertUserMessageMap">
+		{ call insertUserMessage(?,?)}
+	</insert>
+	
+			<!-- 관리자 메시지 DB에 입력 -->
+	<parameterMap type="messageVo" id="insertAdminMessageMap"> 
+		<parameter property="m_receiver" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="m_contents" javaType="String"	jdbcType="VARCHAR" mode="IN" />
+	</parameterMap>
+	<insert id="insertAdminMessage" parameterType="messageVo" parameterMap="insertAdminMessageMap">
+		{ call insertAdminMessage(?,?)}
+	</insert>
+	
+				<!-- 관리자 메시지 DB에 입력 -->
+	<parameterMap type="messageVo" id="AuToinsertAdminMessageMap"> 
+		<parameter property="m_receiver" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="m_contents" javaType="String"	jdbcType="VARCHAR" mode="IN" />
+	</parameterMap>
+	<insert id="AuToinsertAdminMessage" parameterType="messageVo" parameterMap="AuToinsertAdminMessageMap">
+		{ call AuToinsertAdminMessage(?,?)}
+	</insert>
+	
+	<!-- 안 읽은 메시지 개수 조회-->
+	<parameterMap type="messageVo" id="selectUserUnReadMessageMap">
+		<parameter property="m_receiver" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="results" javaType="ResultSet" jdbcType="CURSOR" mode="OUT" resultMap="selectResultMap" />
+	</parameterMap>
+	<select id="selectUserUnReadMessage" parameterMap="selectUserUnReadMessageMap" statementType="CALLABLE" parameterType="HashMap">
+		{ call selectUserUnReadMessage(?,?) }
+	</select> 
+	
+		<!-- m_read(메시지 읽음여부) 업데이트 -->
+	<parameterMap type="messageVo" id="MessageReadUpdateMap">
+		<parameter property="m_receiver" javaType="String" jdbcType="VARCHAR" mode="IN" />
+	</parameterMap>
+	<update id="MessageReadUpdate" parameterMap="MessageReadUpdateMap">
+	{ call MessageReadUpdate(?) }
+	</update>
+	
+			<!-- m_read(메시지 읽음여부) 업데이트 -->
+	<parameterMap type="messageVo" id="MessageReadUpdateAdminMap">
+		<parameter property="m_sender" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="m_receiver" javaType="String" jdbcType="VARCHAR" mode="IN" />
+	</parameterMap>
+	<update id="MessageReadUpdateAdmin" parameterMap="MessageReadUpdateAdminMap">
+	{ call MessageReadUpdateAdmin(?,?) }
+	</update>
+	
+	
+</mapper>
