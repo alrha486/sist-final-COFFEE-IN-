@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Product">
+
+	<resultMap type="productVo" id="selectResultMap"> <!-- 장바구니조회결과가 담길 Map -->
+		<result column="productid" property="productid" jdbcType="TINYINT" javaType="Integer"/>
+		<result column="kind_idx" property="kind_idx" jdbcType="TINYINT" javaType="Integer"/>
+		<result column="productname" property="productname" jdbcType="VARCHAR" javaType="String"/>
+		<result column="productimg" property="productimg" jdbcType="VARCHAR" javaType="String"/>
+		<result column="productex" property="productex" jdbcType="VARCHAR" javaType="String"/>
+		<result column="price" property="price" jdbcType="TINYINT" javaType="Integer"/>
+		<result column="sell_count" property="sell_count" jdbcType="TINYINT" javaType="Integer"/>
+		<result column="registerdate" property="registerdate" jdbcType="DATE" javaType="String"/>
+		<result column="pcount" property="pcount" jdbcType="TINYINT" javaType="Integer"/>
+		<result column="p_type" property="p_type" jdbcType="VARCHAR" javaType="String"/>
+		<result column="p_productkind" property="p_productkind" jdbcType="VARCHAR" javaType="String"/>
+		<result column="selldate" property="selldate" jdbcType="VARCHAR" javaType="String" />
+		<result column="stock" property="stock" jdbcType="TINYINT" javaType="Integer"/>
+	</resultMap>
+
+
+
+
+
+<!-- 	<parameterMap type="productVo" id="ProductselectAllMap">
+		<parameter property="results" javaType="ResultSet" jdbcType="CURSOR" mode="OUT"  resultMap="selectResultMap"/>
+	</parameterMap>
+	<select id="select_productListAll" parameterMap="ProductselectAllMap" statementType="CALLABLE" parameterType="hashMap">
+		{ call select_productListAll(?)}
+	</select> -->
+
+<!-- 	<parameterMap type="productVo" id="ProductselectOneMap">
+		<parameter property="kind_idx" javaType="Integer" jdbcType="TINYINT" mode="IN" />
+		<parameter property="results" javaType="ResultSet" jdbcType="CURSOR" mode="OUT"  resultMap="selectResultMap"/>
+	</parameterMap>
+	<select id="select_productListOne" parameterMap="ProductselectOneMap" statementType="CALLABLE" parameterType="hashMap">
+		{ call select_productListOne(?,?)}
+	</select>
+	
+	<parameterMap type="hashMap" id="ProductselectOnesMap">
+		<parameter property="p_type" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="results" javaType="ResultSet" jdbcType="CURSOR" mode="OUT"  resultMap="selectResultMap"/>
+	</parameterMap>
+	<select id="select_productListOnes" parameterMap="ProductselectOnesMap" statementType="CALLABLE" parameterType="hashMap">
+		{ call select_productListOnes(?,?)}
+	</select>
+	 -->
+	
+
+	
+	<parameterMap type="hashMap" id="selectAnyMap">
+		<parameter property="productName" mode="IN" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<parameter property="result" mode="OUT" javaType="java.sql.ResultSet" jdbcType="CURSOR" resultMap="selectResultMap"/>	
+	</parameterMap>
+	
+	<select id="selectAnySP" parameterMap="selectAnyMap" statementType="CALLABLE">
+		{ call sp_product_select_any(?,?)}
+	</select>
+	
+	<parameterMap type="hashMap" id="selectNewMap">
+		<parameter property="newresult" javaType="java.sql.ResultSet" jdbcType="CURSOR" mode="OUT" resultMap="selectResultMap"/>
+	</parameterMap>
+	<select id="selectNewSP" parameterMap="selectNewMap" statementType="CALLABLE">
+		{ call sp_product_select_new(?)}
+	</select>
+	
+	
+	<!-- 제일 많이 팔린 상품 찾기 -->
+	<parameterMap type="productVo" id="SearchManyPopularityProductMap">
+		<parameter property="results" javaType="ResultSet" jdbcType="CURSOR" mode="OUT"  resultMap="selectResultMap"/>
+	</parameterMap>
+	<select id="SearchManyPopularityProduct" parameterMap="SearchManyPopularityProductMap" statementType="CALLABLE" parameterType="hashMap">
+		{ call SearchManyPopularityProduct(?)}
+	</select>
+	
+		<!-- 추천 상품  조회-->
+	<parameterMap type="productVo" id="SearchRecentlyProductMap">
+		<parameter property="results" javaType="ResultSet" jdbcType="CURSOR" mode="OUT"  resultMap="selectResultMap"/>
+	</parameterMap>
+	<select id="SearchRecentlyProduct" parameterMap="SearchRecentlyProductMap" statementType="CALLABLE" parameterType="hashMap">
+		{ call SearchRecentlyProduct(?)}
+	</select>
+	
+	<parameterMap type="productVo" id="selectProductGrape1Map">
+		<parameter property="results" javaType="ResultSet" jdbcType="CURSOR" mode="OUT"  resultMap="selectResultMap"/>
+	</parameterMap>
+	<select id="selectProductGrape1" parameterMap="selectProductGrape1Map" statementType="CALLABLE" parameterType="hashMap">
+		{ call selectProductGrape1(?)}
+	</select> <!-- 상품그래프(오늘) -->
+	
+	
+	<parameterMap type="hashMap" id="selectProductGrape2Map">
+		<parameter property="selldate" mode="IN" javaType="String" jdbcType="VARCHAR"/>
+		<parameter property="results" javaType="ResultSet" jdbcType="CURSOR" mode="OUT"  resultMap="selectResultMap"/>
+	</parameterMap>
+	<select id="selectProductGrape2" parameterMap="selectProductGrape2Map" statementType="CALLABLE" parameterType="hashMap">
+		{ call selectProductGrape2(?,?)}
+	</select> <!-- 이번주 상품그래프 -->
+	<!-- 현주 --><!-- 현주 --><!-- 현주 --><!-- 현주 --><!-- 현주 --><!-- 현주 --><!-- 현주 --><!-- 현주 --><!-- 현주 --><!-- 현주 --><!-- 현주 --><!-- 현주 --><!-- 현주 --><!-- 현주 --><!-- 현주 --><!-- 현주 --><!-- 현주 --><!-- 현주 --><!-- 현주 --><!-- 현주 --><!-- 현주 --><!-- 현주 --><!-- 현주 --><!-- 현주 --><!-- 현주 -->
+	<!-- 상품 -->
+
+
+	<!-- 상품 등록하기 -->
+	<parameterMap type="productVo" id="productInsertMap">
+		<parameter property="kind_idx" mode="IN" javaType="Integer" jdbcType="TINYINT"/>
+		<parameter property="productname" mode="IN" javaType="String" jdbcType="VARCHAR"/>
+		<parameter property="productimg" mode="IN" javaType="String" jdbcType="VARCHAR"/>
+		<parameter property="productex" mode="IN" javaType="String" jdbcType="VARCHAR"/>
+		<parameter property="price" mode="IN" javaType="Integer" jdbcType="TINYINT"/>
+		<parameter property="stock" mode="IN" javaType="Integer" jdbcType="TINYINT"/>
+	</parameterMap>
+	<insert id="insertProduct"  parameterMap="productInsertMap" parameterType="productVo">
+		{  call insertProduct(?, ?, ?, ?, ?, ?)}
+	</insert>
+
+	<!-- 상품 수정하기 -->
+	<parameterMap type="productVo"  id="productModifyMap">
+		<parameter property="productid" mode="IN" javaType="Integer" jdbcType="TINYINT"/>
+		<parameter property="kind_idx" mode="IN" javaType="Integer" jdbcType="TINYINT"/>
+		<parameter property="productname" mode="IN" javaType="String" jdbcType="VARCHAR"/>
+		<parameter property="productimg" mode="IN" javaType="String" jdbcType="VARCHAR"/>
+		<parameter property="productex" mode="IN" javaType="String" jdbcType="VARCHAR"/>
+		<parameter property="price" mode="IN" javaType="Integer" jdbcType="TINYINT"/>
+		<parameter property="stock" mode="IN" javaType="Integer" jdbcType="TINYINT"/>
+	</parameterMap>
+	<update id="modifyProduct" parameterMap="productModifyMap" parameterType="productVo">
+		{  call modifyProduct(?, ?, ?, ?, ?, ?, ?)}
+	</update>
+
+	<!-- 상품 삭제하기 -->
+	<parameterMap type="productVo" id="productDeleteMap">
+		<parameter property="productid" mode="IN" javaType="Integer" jdbcType="TINYINT"/>
+	</parameterMap>
+	<delete id="deleteProduct"  parameterMap="productDeleteMap" parameterType="productVo">
+		{  call deleteProduct(?)}
+	</delete>
+	
+	<!-- 상품 정보 불러오기 -->
+	<parameterMap type="productVo" id="productInfoMap">
+		<parameter property="productid" mode="IN" javaType="Integer" jdbcType="TINYINT"/>
+		<parameter property="result" javaType="ResultSet" jdbcType="CURSOR" mode="OUT" resultMap="selectResultMap"/>
+	</parameterMap>
+	<select id="infoProduct"  parameterMap="productInfoMap" statementType="CALLABLE" parameterType="hashMap">
+		{  call infoProduct(?,?)}
+	</select>
+
+	<!-- 조건검색 -->   
+   <parameterMap type="hashMap" id="productSelectAjaxMap">
+	  <parameter property="start" jdbcType="INTEGER" javaType="Integer" mode="IN"/>
+	  <parameter property="end"  jdbcType="INTEGER" javaType="Integer" mode="IN"/>
+	  <parameter property="p_type" javaType="String" jdbcType="VARCHAR" mode="IN" />
+	  <parameter property="p_name" javaType="String" jdbcType="VARCHAR" mode="IN" />
+      <parameter property="results" javaType="ResultSet" jdbcType="CURSOR"  mode="OUT"  resultMap="selectResultMap"/>
+   </parameterMap>
+   <select id="productSelectAjax" parameterMap="productSelectAjaxMap" statementType="CALLABLE">
+      { call productInfo_select(?,?,?,?,?) }
+   </select>
+   
+   	<!-- 상품 검색 카운트 -->
+    <parameterMap type="hashMap" id="selectSearchCountMap">
+		<parameter property="p_type" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="p_name" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="result" javaType="Integer" jdbcType="INTEGER" mode="OUT"/>
+	</parameterMap>
+	<select id="selectSearchCountSP" parameterMap="selectSearchCountMap" statementType="CALLABLE">
+		{  call sp_product_search_count(?,?,?) }
+	</select>
+	
+    <!-- 상품 전체 카운트 -->
+    <parameterMap type="hashMap" id="selectTotalCountMap">
+		<parameter property="result" javaType="Integer" jdbcType="INTEGER" mode="OUT"/>
+	</parameterMap>
+	<select id="selectTotalCountSP" parameterMap="selectTotalCountMap" statementType="CALLABLE">
+		{  call sp_product_total_count(?) }
+	</select>
+   
+    <!-- 상품 대분류 카운트 -->
+	<parameterMap type="hashMap" id="selectTypeCountMap">
+		<parameter property="p_type" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="result" javaType="Integer" jdbcType="INTEGER" mode="OUT"/>
+	</parameterMap>
+	<select id="selectTypeCountSP" parameterMap="selectTypeCountMap" statementType="CALLABLE">
+		{  call sp_product_type_count(?,?) }
+	</select>
+
+	<!-- 상품 소분류 카운트 -->
+	<parameterMap type="hashMap" id="selectKindCountMap">
+		<parameter property="kind_idx" javaType="Integer" jdbcType="TINYINT" mode="IN" />
+		<parameter property="result" javaType="Integer" jdbcType="INTEGER" mode="OUT"/>
+	</parameterMap>
+	<select id="selectKindCountSP" parameterMap="selectKindCountMap" statementType="CALLABLE">
+		{  call sp_product_kind_count(?,?) }
+	</select>
+
+	<!-- 상품 전체 목록 -->
+	<parameterMap type="productVo" id="select_productListAllMap">
+		<parameter property="start" jdbcType="INTEGER" javaType="Integer" mode="IN"/>
+		<parameter property="end"  jdbcType="INTEGER" javaType="Integer" mode="IN"/>
+		<parameter property="results" javaType="ResultSet" jdbcType="CURSOR" mode="OUT"  resultMap="selectResultMap"/>
+	</parameterMap>
+	<select id="select_productListAll" parameterMap="select_productListAllMap" statementType="CALLABLE" parameterType="hashMap">
+		{ call select_productListAll(?, ?, ?)}
+	</select>
+
+	<!-- 상품 정보 불러오기 -->
+	<parameterMap type="productVo" id="ProductselectViewMap">
+		<parameter property="productid" javaType="Integer" jdbcType="TINYINT" mode="IN" />
+		<parameter property="results" javaType="ResultSet" jdbcType="CURSOR" mode="OUT"  resultMap="selectResultMap"/>
+	</parameterMap>
+	<select id="selectProductOne" parameterMap="ProductselectViewMap" statementType="CALLABLE" parameterType="hashMap">
+		{ call selectProductOne(?,?)}
+	</select>
+
+	<!-- 상품 소분류 목록 -->
+	<parameterMap type="productVo" id="ProductselectOneMap">
+	<parameter property="kind_idx" javaType="Integer" jdbcType="TINYINT" mode="IN" />
+	<parameter property="start" jdbcType="INTEGER" javaType="Integer" mode="IN"/>
+	<parameter property="end"  jdbcType="INTEGER" javaType="Integer" mode="IN"/>
+	<parameter property="results" javaType="ResultSet" jdbcType="CURSOR" mode="OUT"  resultMap="selectResultMap"/>
+	</parameterMap>
+	<select id="select_productListOne" parameterMap="ProductselectOneMap" statementType="CALLABLE" parameterType="hashMap">
+		{ call select_productListOne(?,?,?,?)}
+	</select>
+	
+	<!-- 상품 대분류 목록 -->
+	<parameterMap type="productVo" id="ProductselectOnesMap">
+	<parameter property="p_type" javaType="String" jdbcType="VARCHAR" mode="IN" />
+	<parameter property="start" jdbcType="INTEGER" javaType="Integer" mode="IN"/>
+	<parameter property="end"  jdbcType="INTEGER" javaType="Integer" mode="IN"/>
+	<parameter property="results" javaType="ResultSet" jdbcType="CURSOR" mode="OUT"  resultMap="selectResultMap"/>
+	</parameterMap>
+	<select id="select_productListOnes" parameterMap="ProductselectOnesMap" statementType="CALLABLE" parameterType="hashMap">
+		{ call select_productListOnes(?,?,?,?)}
+	</select>
+	</mapper>

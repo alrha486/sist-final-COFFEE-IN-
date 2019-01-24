@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="QnA">
+
+	<resultMap type="qnaVo" id="selectResultMap">
+		<result column="qna_idx" property="qna_idx" jdbcType="INTEGER" javaType="Integer"/>
+		<result column="contents" property="contents" jdbcType="VARCHAR" javaType="String"/>
+		<result column="user_idx" property="user_idx" jdbcType="INTEGER" javaType="Integer"/>
+		<result column="title" property="title" jdbcType="VARCHAR" javaType="String"/>
+		<result column="writedate" property="writedate" jdbcType="DATE" javaType="String"/>
+		<result column="c_lock" property="c_lock" jdbcType="SMALLINT" javaType="Integer"/>
+		<result column="readnum" property="readnum" jdbcType="SMALLINT" javaType="Integer"/>
+		<result column="grp" property="grp" jdbcType="INTEGER" javaType="Integer"/>
+		<result column="lev" property="lev" jdbcType="TINYINT" javaType="Integer"/>
+		<result column="step" property="step" jdbcType="TINYINT" javaType="Integer"/>
+	</resultMap>
+	
+	<!-- 리스트에 전부 표시 -->
+	<parameterMap type="hashMap" id="selectAllMap">
+		<parameter property="results" javaType="ResultSet" jdbcType="CURSOR" 
+			mode="OUT"  resultMap="selectResultMap"/>
+	</parameterMap>
+	<select id="selectAll" parameterMap="selectAllMap" statementType="CALLABLE">
+		{  call board_selectAll(?)}
+	</select>
+
+	<!-- 뷰에 하나만 표시 -->
+	<parameterMap type="qnaVo" id="selectOneMap">
+		<parameter property="qna_idx" javaType="Integer" jdbcType="INTEGER" mode="IN"/>
+		<parameter property="result" javaType="ResultSet" jdbcType="CURSOR" 
+			mode="OUT"  resultMap="selectResultMap"/>
+	</parameterMap>
+	<select id="selectOne" parameterMap="selectOneMap" statementType="CALLABLE" parameterType="hashMap">
+		{  call board_select(?,?)}
+	</select>
+	
+	<!-- 조회수 표시 -->
+	<parameterMap type="hashMap" id="selectCountMap">
+		<parameter property="result" javaType="Integer" jdbcType="INTEGER" mode="OUT"/>
+	</parameterMap>
+	<select id="selectTotalCount" parameterMap="selectCountMap" statementType="CALLABLE">
+		{  call board_readnum_update(?) }
+	</select>
+	
+	
+	<!-- 삽입하기 -->
+	<parameterMap type="qnaVo" id="insertMap">
+		<parameter property="title" javaType="String" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="c_lock" javaType="Integer" jdbcType="TINYINT" mode="IN"/>
+		<parameter property="contents" javaType="String" jdbcType="VARCHAR" mode="IN"/>		
+	</parameterMap>
+	<insert id="insert" parameterType="qnaVo" parameterMap="insertMap">
+		{  call board_insert(?,?,?)}
+	</insert>
+	
+	<!-- 답글달기 -->
+	<parameterMap type="qnaVo" id="replyMap">
+		<parameter property="title" mode="IN" />
+		<parameter property="c_lock" mode="IN"/>
+		<parameter property="contents" mode="IN" />
+		<parameter property="grp" mode="IN" />
+		<parameter property="lev" mode="IN" />
+		<parameter property="step" mode="IN" />
+	</parameterMap>
+	<insert id="replyInsert" parameterMap="replyMap">
+		{ call board_reply_insert(?,?,?,?,?,?) }
+	</insert>
+	
+	<!-- 답글 그룹 스텝 업데이트 -->
+	<update id="replyUpdate" parameterType="hashMap">
+		{ call board_update_step(#{grp}, #{step}) }
+	</update>
+
+	<!-- 삭제하기 -->
+	<parameterMap type="Integer" id="deleteMap">
+		<parameter property="qna_idx" javaType="Integer" jdbcType="INTEGER" mode="IN"/>
+	</parameterMap>
+	<delete id="delete" parameterMap="deleteMap">
+		{  call board_delete(?)}
+	</delete>
+	
+	<!-- 수정하기 -->
+	<parameterMap type="qnaVo"  id="updateMap">
+		<parameter property="title"  javaType="String" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="contents" javaType="String" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="c_lock" javaType="Integer" jdbcType="TINYINT" mode="IN"/>
+		<parameter property="qna_idx" javaType="Integer" jdbcType="TINYINT" mode="IN"/>
+	</parameterMap>
+	<update id="update" parameterMap="updateMap">
+		{call board_update(?, ?, ?, ?)}
+	</update>
+	
+	
+	
+</mapper>

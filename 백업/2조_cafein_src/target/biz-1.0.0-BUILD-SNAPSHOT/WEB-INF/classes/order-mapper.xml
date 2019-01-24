@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Order">
+
+	<resultMap type="orderdetailVo" id="selectResultMap"> 
+		<result column="orderidx" property="orderidx" jdbcType="INTEGER" javaType="Integer" />
+		<result column="orderid" property="orderid" jdbcType="INTEGER" javaType="Integer" />
+		<result column="productid" property="productid" jdbcType="INTEGER" javaType="Integer" />		
+		<result column="pcount" property="pcount" jdbcType="INTEGER" javaType="Integer" />
+		<result column="price" property="price" jdbcType="INTEGER" javaType="Integer" />
+		<result column="productname" property="productname" jdbcType="VARCHAR" javaType="String" />
+		<result column="productimg" property="productimg" jdbcType="VARCHAR" javaType="String" />
+		<result column="username" property="username" jdbcType="VARCHAR" javaType="String" />
+		<result column="selldate" property="selldate" jdbcType="DATE" javaType="String" />
+		<result column="tel" property="tel" jdbcType="VARCHAR" javaType="String" />
+		<result column="zipcode" property="zipcode" jdbcType="VARCHAR" javaType="String" />
+		<result column="address1" property="address1" jdbcType="VARCHAR" javaType="String" />
+		<result column="address2" property="address2" jdbcType="VARCHAR" javaType="String" />
+		<result column="message" property="message" jdbcType="VARCHAR" javaType="String" />
+		<result column="payid" property="payid" jdbcType="INTEGER" javaType="Integer" />
+		<result column="o_state" property="o_state" jdbcType="INTEGER" javaType="Integer" />
+		<result column="couponNum" property="couponNum" jdbcType="INTEGER" javaType="Integer" />
+		<result column="delivery" property="delivery" jdbcType="INTEGER" javaType="Integer" />
+		<result column="totalprice" property="totalprice" jdbcType="INTEGER" javaType="Integer" />
+		<result column="coupon_discount" property="coupon_discount" jdbcType="INTEGER" javaType="Integer" />
+		<result column="saving_discount" property="saving_discount" jdbcType="INTEGER" javaType="Integer" />
+		<result column="realtotalprice" property="realtotalprice" jdbcType="INTEGER" javaType="Integer" />
+	</resultMap>
+
+
+<!-- 
+	<resultMap type="orderdetailVo" id="selectResultMap"> 
+		<result column="selldate" property="selldate" jdbcType="DATE" javaType="String" />
+		<result column="orderid" property="orderid" jdbcType="TINYINT" javaType="Integer" />
+		<result column="productimg" property="productimg" jdbcType="VARCHAR" javaType="String" />
+		<result column="productname" property="productname" jdbcType="VARCHAR" javaType="String" />
+		<result column="totalprice" property="totalprice" jdbcType="INTEGER" javaType="Integer" />
+		<result column="o_state" property="o_state" jdbcType="INTEGER" javaType="Integer" />
+	</resultMap>
+
+	<resultMap type="orderdetailVo" id="selectResultMap7"> 
+		<result column="orderidx" property="orderidx" jdbcType="INTEGER" javaType="Integer" />
+		<result column="orderid" property="orderid" jdbcType="INTEGER" javaType="Integer" />
+		<result column="productid" property="productid" jdbcType="INTEGER" javaType="Integer" />
+		<result column="pcount" property="pcount" jdbcType="INTEGER" javaType="Integer" />
+		<result column="price" property="price" jdbcType="INTEGER" javaType="Integer" />
+		<result column="productimg" property="productimg" jdbcType="VARCHAR" javaType="String" />
+		<result column="productname" property="productname" jdbcType="VARCHAR" javaType="String" />
+	</resultMap>
+ -->
+
+		<parameterMap type="orderbasicVo" id="insertOrderBasicMap"> 
+			<parameter property="userid" javaType="String" jdbcType="VARCHAR" mode="IN" />
+			<parameter property="username" javaType="String" jdbcType="VARCHAR" mode="IN" />
+			<parameter property="tel" javaType="String" jdbcType="VARCHAR" mode="IN" />
+			<parameter property="zipcode" javaType="String" jdbcType="VARCHAR" mode="IN" />
+			<parameter property="address1" javaType="String" jdbcType="VARCHAR" mode="IN" />
+			<parameter property="address2" javaType="String" jdbcType="VARCHAR" mode="IN" />
+			<parameter property="message" javaType="String" jdbcType="VARCHAR" mode="IN" />
+			<parameter property="payid" javaType="Integer" jdbcType="TINYINT" mode="IN" />
+			<parameter property="couponNum" javaType="Integer" jdbcType="TINYINT" mode="IN" />
+			<parameter property="delivery" javaType="Integer" jdbcType="TINYINT" mode="IN" />
+			<parameter property="totalprice" javaType="Integer" jdbcType="TINYINT" mode="IN" />
+			<parameter property="coupon_discount" javaType="Integer" jdbcType="INTEGER" mode="IN" />
+			<parameter property="saving_discount" javaType="Integer" jdbcType="INTEGER" mode="IN" />
+			<parameter property="realtotalprice" javaType="Integer" jdbcType="INTEGER" mode="IN" />
+	</parameterMap>
+	<insert id="orderBasic_insert" parameterType="orderbasicVo" parameterMap="insertOrderBasicMap">
+		{ call orderBasic_insert(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}
+	</insert>
+	
+	
+	<parameterMap type="orderdetailVo" id="selectOrderidMap">
+		<parameter property="results" javaType="ResultSet" jdbcType="CURSOR" mode="OUT"  resultMap="selectResultMap"/>
+	</parameterMap>
+	<select id="selectOrderid" parameterMap="selectOrderidMap" statementType="CALLABLE" parameterType="hashMap">
+		{ call selectOrderid(?)}
+	</select> <!-- 가장최근idx값 가져오기 -->
+	
+	<parameterMap type="orderdetailVo" id="insertorderDetailVoMap"> <!--  카트 전체조회 -->
+		<parameter property="orderid" javaType="Integer" jdbcType="TINYINT" mode="IN" />
+		<parameter property="productid" javaType="Integer" jdbcType="TINYINT" mode="IN" />
+		<parameter property="pcount" javaType="Integer" jdbcType="TINYINT" mode="IN" />
+		<parameter property="price" javaType="Integer" jdbcType="SMALLINT" mode="IN" />
+	</parameterMap>
+	<select id="insertOrderDetail" parameterMap="insertorderDetailVoMap" statementType="CALLABLE" parameterType="hashMap">
+		{ call orderDetail_insert(?,?,?,?)}
+	</select> <!-- cartid랑 productid로 해당상품이 장바구니에 존재하는지 확인  -->
+	
+	
+	<parameterMap type="orderdetailVo" id="orderInfoSelectMap">
+		<parameter property="userid" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="results" javaType="ResultSet" jdbcType="CURSOR" mode="OUT"  resultMap="selectResultMap"/>
+	</parameterMap>
+	<select id="orderInfoSelect" parameterMap="orderInfoSelectMap" statementType="CALLABLE" parameterType="hashMap">
+		{ call orderInfoSelect(?,?)}
+	</select> <!-- 한 유저의 주문정보 조회 -->
+	
+	<parameterMap type="orderdetailVo" id="orderIdsSizeMap">
+		<parameter property="orderid" javaType="Integer" jdbcType="TINYINT" mode="IN" />
+		<parameter property="results" javaType="ResultSet" jdbcType="CURSOR" mode="OUT"  resultMap="selectResultMap"/>
+	</parameterMap>
+	<select id="orderIdsSize" parameterMap="orderIdsSizeMap" statementType="CALLABLE" parameterType="hashMap">
+		{ call orderIdsSize(?,?)}
+	</select> <!-- 한 유저의 주문정보 조회 -->
+	
+	<parameterMap type="orderdetailVo" id="orderDetailSelectMap">
+		<parameter property="orderid" javaType="Integer" jdbcType="TINYINT" mode="IN" />
+		<parameter property="results" javaType="ResultSet" jdbcType="CURSOR" mode="OUT"  resultMap="selectResultMap"/>
+	</parameterMap>
+	<select id="orderDetailSelect" parameterMap="orderDetailSelectMap" statementType="CALLABLE" parameterType="hashMap">
+		{ call orderDetailSelect(?,?)}
+	</select> <!-- 한 유저의 주문정보 조회 -->
+
+
+
+	<parameterMap type="productVo" id="updateProductNumMap">
+		<parameter property="productid" javaType="Integer" jdbcType="TINYINT" mode="IN" />
+		<parameter property="pcount" javaType="Integer" jdbcType="TINYINT" mode="IN" />
+	</parameterMap>
+	<update id="updateProductNum" parameterMap="updateProductNumMap">
+	{ call updateProductNum(?,?) }
+	</update>
+
+	<parameterMap type="hashMap" id="SearchOrderCountMap">
+		<parameter property="date1" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="date2" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="results" javaType="ResultSet" jdbcType="CURSOR" mode="OUT"  resultMap="selectResultMap"/>
+	</parameterMap>
+	<select id="SearchOrderCount" parameterMap="SearchOrderCountMap" statementType="CALLABLE" parameterType="hashMap">
+		{ call SearchOrderCount(?,?,?)}
+	</select> <!-- 주문현황 그래프 -->
+	
+		<parameterMap type="hashMap" id="SearchOrderCount1Map">
+		<parameter property="date" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="results" javaType="ResultSet" jdbcType="CURSOR" mode="OUT"  resultMap="selectResultMap"/>
+	</parameterMap>
+	<select id="SearchOrderCount1" parameterMap="SearchOrderCount1Map" statementType="CALLABLE" parameterType="hashMap">
+		{ call SearchOrderCount1(?,?)}
+	</select> <!-- 이번 주 주문 수량 그래프 -->
+	
+    <parameterMap type="hashMap" id="SearchOrderCount2Map">
+		<parameter property="date" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="results" javaType="ResultSet" jdbcType="CURSOR" mode="OUT"  resultMap="selectResultMap"/>
+	</parameterMap>
+	<select id="SearchOrderCount2" parameterMap="SearchOrderCount2Map" statementType="CALLABLE" parameterType="hashMap">
+		{ call SearchOrderCount2(?,?)}
+	</select> <!-- 이번 주 주문 수량 그래프 -->
+
+</mapper>
+

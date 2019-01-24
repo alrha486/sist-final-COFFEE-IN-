@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="My">
+
+	<resultMap type="myVo" id="MyMap">
+		<result column="userid" property="userid" jdbcType="VARCHAR" javaType="String" />
+		<result column="passwd" property="passwd" jdbcType="VARCHAR" javaType="String" />
+		<result column="username" property="username" jdbcType="VARCHAR" javaType="String" />
+		<result column="usernickname" property="usernickname" jdbcType="VARCHAR" javaType="String" />
+		<result column="email" property="email" jdbcType="VARCHAR" javaType="String" />
+		<result column="tel" property="tel" jdbcType="VARCHAR" javaType="String" />
+		<result column="regdate" property="regdate" jdbcType="DATE" javaType="String" />
+		<result column="zipcode" property="zipcode" jdbcType="VARCHAR" javaType="String" />
+		<result column="address1" property="address1" jdbcType="VARCHAR" javaType="String" />
+		<result column="address2" property="address2" jdbcType="VARCHAR" javaType="String" />
+	</resultMap>
+	
+	<parameterMap type="hashMap" id="myselectMap">
+		<parameter property="userid" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="myresult" javaType="ResultSet" jdbcType="CURSOR" mode="OUT" resultMap="MyMap"/>
+	</parameterMap>
+	<select id="myreturn" parameterMap="myselectMap" statementType="CALLABLE" parameterType="hashMap">
+		{ call my_select(?,?)}
+	</select>
+	
+	<parameterMap type="myVo" id="myupdate"> <!-- 일반 회원가입 -->
+		<parameter property="userid" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="passwd" javaType="String" 	jdbcType="VARCHAR" mode="IN" />
+		<parameter property="username" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="usernickname" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="email" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="tel" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="zipcode" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="address1" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="address2" javaType="String" jdbcType="VARCHAR" mode="IN" />
+	</parameterMap>
+	
+	<update id="myupdate" parameterMap="myupdate" parameterType="myVo">
+		{ call my_update(?,?,?,?,?,?,?,?,?)}	
+	</update>
+	
+	<parameterMap type="hashMap" id="mydeleteMap">
+		<parameter property="userid" javaType="String" jdbcType="VARCHAR" mode="IN"/>
+	</parameterMap>
+	<delete id="mydelete" parameterMap="mydeleteMap" statementType="CALLABLE" parameterType="hashMap">
+		{ call my_delete(?)}
+	</delete>
+</mapper>

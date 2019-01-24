@@ -1,0 +1,17 @@
+#productName{
+	border-radius: 5px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: rgb(200, 200, 200);
+	height:25px;
+
+}
+
+#searchmargin{
+	margin-left: 30px;
+}
+
+#searchicon{
+	margin-left: 5px;
+	margin-bottom: 3px;
+}

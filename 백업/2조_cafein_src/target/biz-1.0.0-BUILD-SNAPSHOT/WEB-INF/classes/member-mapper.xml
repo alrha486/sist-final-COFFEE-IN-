@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Member">
+
+	<resultMap type="memberVo" id="selectResultMap"> <!-- Member테이블select 시 담길 Map -->
+		<result column="idx" property="idx" jdbcType="INTEGER"
+			javaType="Integer" />
+		<result column="username" property="username"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="usernickname" property="usernickname"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="userid" property="userid" jdbcType="VARCHAR"
+			javaType="String" />
+		<result column="passwd" property="passwd" jdbcType="VARCHAR"
+			javaType="String" />
+		<result column="email" property="email" jdbcType="VARCHAR"
+			javaType="String" />
+		<result column="tel" property="tel" jdbcType="VARCHAR"
+			javaType="String" />
+		<result column="regdate" property="regdate" jdbcType="DATE"
+			javaType="String" />
+		<result column="zipcode" property="zipcode" jdbcType="VARCHAR"
+			javaType="String" />
+		<result column="address1" property="address1"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="address2" property="address2"
+			jdbcType="VARCHAR" javaType="String" />
+	</resultMap>
+
+	<parameterMap type="memberVo" id="IdCheckMap">
+		<parameter property="userid" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="result" javaType="ResultSet" jdbcType="CURSOR" mode="OUT" resultMap="selectResultMap" />
+	</parameterMap>
+	<select id="checkid" parameterMap="IdCheckMap"	statementType="CALLABLE" parameterType="HashMap">
+		{ call userid_select(?,?) }
+	</select> <!-- ID중복체크 -->
+
+	<parameterMap type="memberVo" id="NickCheckMap">
+		<parameter property="usernickname" javaType="String"
+			jdbcType="VARCHAR" mode="IN" />
+		<parameter property="result" javaType="ResultSet"
+			jdbcType="CURSOR" mode="OUT" resultMap="selectResultMap" />
+	</parameterMap>
+	<select id="checkNick" parameterMap="NickCheckMap"
+		statementType="CALLABLE" parameterType="HashMap">
+		{ call usernick_select(?,?) }
+	</select> <!-- 닉네임 중복체크 -->
+
+	<parameterMap type="memberVo" id="insertMember"> <!-- 일반 회원가입 -->
+		<parameter property="userid" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="passwd" javaType="String" 	jdbcType="VARCHAR" mode="IN" />
+		<parameter property="username" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="usernickname" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="email" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="tel" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="zipcode" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="address1" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="address2" javaType="String" jdbcType="VARCHAR" mode="IN" />
+	</parameterMap>
+	<insert id="insertMember" parameterType="memberVo"
+		parameterMap="insertMember">
+		{ call member_insert(?,?,?,?,?,?,?,?,?)}
+	</insert>
+
+		<parameterMap type="memberVo" id="insertKakao"> <!-- 일반 회원가입 -->
+		<parameter property="userid" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="passwd" javaType="String" 	jdbcType="VARCHAR" mode="IN" />
+		<parameter property="username" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="usernickname" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="email" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="tel" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="zipcode" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="address1" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="address2" javaType="String" jdbcType="VARCHAR" mode="IN" />
+	</parameterMap>
+	<insert id="insertKakao" parameterType="memberVo"
+		parameterMap="insertKakao">
+		{ call member_insert(?,?,?,?,?,?,?,?,?)}
+	</insert>
+
+
+	<parameterMap type="memberVo" id="loginMember">
+		<parameter property="userid" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="result" javaType="ResultSet" jdbcType="CURSOR" mode="OUT" resultMap="selectResultMap" />
+	</parameterMap>
+	<select id="loginMember" parameterMap="loginMember"
+		statementType="CALLABLE" parameterType="HashMap">
+		{ call member_login(?,?) }
+	</select> <!-- 로그인 중복체크 -->
+	
+	
+	<parameterMap type="String" id="userIdMap">
+		<parameter property="userid" javaType="String" jdbcType="VARCHAR" mode="IN" />
+	</parameterMap>
+	<insert id="insertNewMemberCoupon"  parameterMap="userIdMap">
+		{ call insertNewMemberCoupon(?)}
+	</insert> <!-- 신규회원 쿠폰발급 -->
+	
+	
+	<parameterMap type="memberVo" id="userInfoSelectMap">
+		<parameter property="userid" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="result" javaType="ResultSet" jdbcType="CURSOR" mode="OUT" resultMap="selectResultMap" />
+	</parameterMap>
+	<select id="userInfoSelect" parameterMap="userInfoSelectMap" statementType="CALLABLE" parameterType="HashMap">
+		{ call member_select(?,?) }
+	</select> <!-- userid로 회원정보 가져오기 -->
+	
+		
+		
+	<parameterMap type="memberVo" id="updateUserMap"> <!-- 회웑정보수정 -->
+		<parameter property="userid" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="passwd" javaType="String" 	jdbcType="VARCHAR" mode="IN" />
+		<parameter property="usernickname" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="email" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="tel" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="zipcode" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="address1" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="address2" javaType="String" jdbcType="VARCHAR" mode="IN" />
+	</parameterMap>
+	<update id="member_update" parameterType="memberVo" parameterMap="updateUserMap">
+		{ call member_update(?,?,?,?,?,?,?,?)}
+	</update>
+	
+	<parameterMap type="memberVo" id="deleteMemberMap"> <!-- 회원삭제 -->
+		<parameter property="userid" javaType="String" jdbcType="VARCHAR" mode="IN" />
+	</parameterMap>
+	<update id="member_delete" parameterType="memberVo" parameterMap="deleteMemberMap">
+		{ call member_delete(?)}
+	</update>
+	
+	<parameterMap type="memberVo" id="selectUserInfoMap">
+		<parameter property="username" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="userid" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="result" javaType="ResultSet" jdbcType="CURSOR" mode="OUT" resultMap="selectResultMap" />
+	</parameterMap>
+	<select id="selectUserInfo" parameterMap="selectUserInfoMap" statementType="CALLABLE" parameterType="HashMap">
+		{ call selectUserInfo(?,?,?) }
+	</select> <!-- 비밀번호 찾기 -->
+	
+	
+	<parameterMap type="memberVo" id="updateUserInfoMap"> <!-- 회웑정보수정 -->
+		<parameter property="userid" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="passwd" javaType="String" 	jdbcType="VARCHAR" mode="IN" />
+	</parameterMap>
+	<update id="updateUserInfo" parameterType="memberVo" parameterMap="updateUserInfoMap">
+		{ call updateUserInfo(?,?)}
+	</update> <!-- 유저 비밀번호업데이트 -->
+	
+	<parameterMap type="memberVo" id="selectUserInfoMap1">
+		<parameter property="username" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="tel" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="result" javaType="ResultSet" jdbcType="CURSOR" mode="OUT" resultMap="selectResultMap" />
+	</parameterMap>
+	<select id="selectUserInfo1" parameterMap="selectUserInfoMap1" statementType="CALLABLE" parameterType="HashMap">
+		{ call selectUserInfo1(?,?,?) }
+	</select> <!-- ID 찾기 -->
+
+
+	<insert id="insertSession"> <!-- 방문자수  -->
+		{ call insertSession()}
+	</insert>
+
+
+</mapper>

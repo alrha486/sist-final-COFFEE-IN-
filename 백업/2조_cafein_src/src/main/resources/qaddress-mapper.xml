@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Qaddress">
+
+	<resultMap type="qaddressVo" id="QaddressMap">
+		<result column="seq" property="seq" jdbcType="INTEGER" javaType="Integer" />
+		<result column="userid" property="userid" jdbcType="VARCHAR" javaType="String" />
+		<result column="qaddressname" property="qaddressname" jdbcType="VARCHAR" javaType="String" />
+		<result column="qzipcode" property="qzipcode" jdbcType="VARCHAR" javaType="String" />
+		<result column="qaddress1" property="qaddress1" jdbcType="VARCHAR" javaType="String" />
+		<result column="qaddress2" property="qaddress2" jdbcType="VARCHAR" javaType="String" />
+	</resultMap>
+	
+	<parameterMap type="qaddressVo" id="qaddressinsert">
+		<parameter property="userid" javaType="String" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="qaddressname" javaType="String" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="qzipcode" javaType="String" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="qaddress1" javaType="String" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="qaddress2" javaType="String" jdbcType="VARCHAR" mode="IN"/>
+	</parameterMap>
+	
+	<insert id="qaddressinsert" parameterMap="qaddressinsert" parameterType="qaddressVo">
+		{ call sq_address_insert(?,?,?,?,?)}
+	</insert>
+	
+	<parameterMap type="hashMap" id="qaddressselect">
+		<parameter property="userid" javaType="String" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="qaddressresult" javaType="ResultSet" jdbcType="CURSOR" mode="OUT" resultMap="QaddressMap"/>
+	</parameterMap>
+	<select id="qaddressselect" parameterMap="qaddressselect" parameterType="hashMap" statementType="CALLABLE">
+		{ call sq_address_select(?,?)}
+	</select>
+	
+	<parameterMap type="qaddressVo" id="qaddressdelete">
+		<parameter property="qaddressname" javaType="String" jdbcType="VARCHAR" mode="IN"/>
+	</parameterMap>
+	<delete id="qaddressdelete" parameterMap="qaddressdelete" parameterType="qaddressVo">
+		{ call sq_address_delete(?)}
+	</delete>
+
+</mapper>

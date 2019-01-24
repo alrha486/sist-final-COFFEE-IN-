@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Coupon">
+
+	<resultMap type="couponVo" id="selectResultMap2"> <!-- Member테이블select 시 담길 Map -->
+		<result column="couponNum" property="couponNum" jdbcType="INTEGER" javaType="Integer" />
+		<result column="c_name" property="c_name" jdbcType="VARCHAR" javaType="String" />
+		<result column="c_content" property="c_content" jdbcType="VARCHAR" javaType="String" />
+		<result column="c_discount" property="c_discount" jdbcType="INTEGER" javaType="Integer" />
+		<result column="c_dead" property="c_dead" jdbcType="DATE" javaType="String" />
+		<result column="c_condition" property="c_condition" jdbcType="INTEGER" javaType="Integer" />		
+	</resultMap>
+
+	<resultMap type="userCouponVo" id="selectResultMap"> <!-- Member테이블select 시 담길 Map -->
+		<result column="c_idx" property="c_idx" jdbcType="INTEGER" javaType="Integer" />
+		<result column="userid" property="userid" jdbcType="VARCHAR" javaType="String" />
+		<result column="couponNum" property="couponNum" jdbcType="INTEGER" javaType="Integer" />
+		<result column="receive_date" property="receive_date" jdbcType="VARCHAR" javaType="String" />
+		<result column="validity" property="validity" jdbcType="INTEGER" javaType="Integer" />
+		<!-- 이후로는 join으로 인한 추가 result map -->
+		<result column="c_name" property="c_name" jdbcType="VARCHAR" javaType="String" />
+		<result column="c_content" property="c_content" jdbcType="VARCHAR" javaType="String" />
+		<result column="c_discount" property="c_discount" jdbcType="INTEGER" javaType="Integer" />
+		<result column="c_dead" property="c_dead" jdbcType="DATE" javaType="String" />
+		<result column="c_condition" property="c_condition" jdbcType="SMALLINT" javaType="Integer" />		
+	</resultMap>
+	
+	<resultMap type="savingVo" id="selectResultMap1"> <!-- 적립금 resultmap -->
+		<result column="s_idx" property="s_idx" jdbcType="INTEGER" javaType="Integer" />
+		<result column="userid" property="userid" jdbcType="VARCHAR" javaType="String" />
+		<result column="saving" property="saving" jdbcType="INTEGER" javaType="Integer" />
+	</resultMap>
+	
+	
+	
+	<parameterMap type="userCouponVo" id="userCouponSelectMap">
+		<parameter property="userid" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="result" javaType="ResultSet" jdbcType="CURSOR" mode="OUT" resultMap="selectResultMap" />
+	</parameterMap>
+	<select id="select_userCoupon" parameterMap="userCouponSelectMap" statementType="CALLABLE" parameterType="HashMap">
+		{ call select_userCoupon(?,?) }
+	</select> 
+	
+	
+	<parameterMap type="userCouponVo" id="updateUserCouponMap">
+		<parameter property="userid" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="couponNum" javaType="Integer" jdbcType="TINYINT" mode="IN" />
+	</parameterMap>
+	<update id="updateUserCoupon" parameterMap="updateUserCouponMap">
+	{ call updateUserCoupon(?,?) }
+	</update>
+
+
+	<parameterMap type="savingVo" id="selectMySavingMap">
+		<parameter property="userid" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="results" javaType="ResultSet" jdbcType="CURSOR" mode="OUT" resultMap="selectResultMap1" />
+	</parameterMap>
+	<select id="selectMySaving" parameterMap="selectMySavingMap" statementType="CALLABLE" parameterType="HashMap">
+		{ call selectMySaving(?,?) }
+	</select> 
+	
+	
+	<parameterMap type="savingVo" id="updateUserSavingMap">
+		<parameter property="userid" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="saving" javaType="Integer" jdbcType="TINYINT" mode="IN" />
+	</parameterMap>
+	<update id="updateUserSaving" parameterMap="updateUserSavingMap">
+	{ call updateUserSaving(?,?) }
+	</update>
+	
+	
+	<parameterMap type="savingVo" id="insertBasicSavingMap"> <!-- 일반 회원가입 -->
+		<parameter property="userid" javaType="String" jdbcType="VARCHAR" mode="IN" />		
+	</parameterMap>
+	<insert id="insertBasicSaving" parameterType="savingVo" parameterMap="insertBasicSavingMap">
+		{ call insertBasicSaving(?)}
+	</insert> <!-- 회원가입 시 기본 적립금 insert (0원으로) -->
+	
+
+	<parameterMap type="savingVo" id="afterPurchaseUpdateMap">
+		<parameter property="userid" javaType="String" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="saving" javaType="Integer" jdbcType="TINYINT" mode="IN" />
+	</parameterMap>
+	<update id="afterPurchaseUpdate" parameterMap="afterPurchaseUpdateMap">
+	{ call afterPurchaseUpdate(?,?) }
+	</update>
+	
+	
+	<parameterMap type="couponVo" id="selectCouponOneMap">
+		<parameter property="couponNum" javaType="Integer" jdbcType="INTEGER" mode="IN" />
+		<parameter property="result" javaType="ResultSet" jdbcType="CURSOR" mode="OUT" resultMap="selectResultMap2" />
+	</parameterMap>
+	<select id="selectCouponOne" parameterMap="selectCouponOneMap" statementType="CALLABLE" parameterType="HashMap">
+		{ call selectCouponOne(?,?) }
+	</select> 
+	
+	
+</mapper>
